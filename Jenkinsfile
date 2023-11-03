@@ -33,7 +33,7 @@ pipeline {
 
                     // Push the Docker image to the registry
                     sh "docker push $username/$projectName:$version"
-//                     sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
+                    sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
                 }
             }
         }
