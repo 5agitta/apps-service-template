@@ -8,9 +8,10 @@ pipeline {
 
                 script {
                     sh "java -version"
-                    sh "./gradlew bootBuildImage --info"
-                    sh "export KUBECONFIG=/home/kubeconfig"
-                    sh "kubectl get nodes"
+//                     sh "./gradlew bootBuildImage --info"
+//                     sh "export KUBECONFIG=/home/kubeconfig"
+                    sh "KUBECONFIG=/home/kubeconfig kubectl config view"
+                    sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
                 }
             }
         }
