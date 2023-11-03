@@ -33,7 +33,8 @@ pipeline {
 
                     // Push the Docker image to the registry
                     sh "docker push $username/$projectName:$version"
-                    sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
+                    sh "KUBECONFIG=/home/kubeconfig kubectl get pods --namespace dev"
+                    sh "KUBECONFIG=/home/kubeconfig helm upgrade $projectName --namespace dev -f values-dev.yaml oci://registry-1.docker.io/5agitta/sagitta-chart"
                 }
             }
         }
