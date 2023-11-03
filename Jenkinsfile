@@ -8,36 +8,34 @@ pipeline {
 
                 script {
                     sh "java -version"
-//                     sh "./gradlew bootBuildImage --info"
-//                     sh "export KUBECONFIG=/home/kubeconfig"
-                    sh "KUBECONFIG=/home/kubeconfig kubectl config view"
-                    sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
+                    sh "./gradlew bootBuildImage --info"
                 }
             }
         }
 
-//         stage ('Push Docker Image') {
-//             steps {
-//                 script {
-//                     def username = sh(
-//                         script: './gradlew properties | grep -w "registryUsername" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
-//                         returnStdout: true,
-//                     )
-//
-//                     def projectName = sh(
-//                         script: './gradlew properties | grep -w "name" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
-//                         returnStdout: true,
-//                     )
-//
-//                     def version = sh(
-//                         script: './gradlew properties | grep -w "version" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
-//                         returnStdout: true,
-//                     )
-//
-//                     // Push the Docker image to the registry
-//                     sh "docker push $username/$projectName:$version"
-//                 }
-//             }
-//         }
+        stage ('Push Docker Image') {
+            steps {
+                script {
+                    def username = sh(
+                        script: './gradlew properties | grep -w "registryUsername" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
+                        returnStdout: true,
+                    )
+
+                    def projectName = sh(
+                        script: './gradlew properties | grep -w "name" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
+                        returnStdout: true,
+                    )
+
+                    def version = sh(
+                        script: './gradlew properties | grep -w "version" | awk -F ": " \'{print $2}\' | awk \'{$1=$1};1\' | tr -d "\\n"',
+                        returnStdout: true,
+                    )
+
+                    // Push the Docker image to the registry
+                    sh "docker push $username/$projectName:$version"
+//                     sh "KUBECONFIG=/home/kubeconfig kubectl get nodes"
+                }
+            }
+        }
     }
 }
